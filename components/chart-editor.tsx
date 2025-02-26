@@ -113,7 +113,7 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
             </div>
           </div>
 		  <div className="flex items-center gap-4">
-			<Button variant="destructive">
+			<Button variant="outline">
 		    	<Send className="mr-2 h-4 w-4" />
 		     	cancel
 		    </Button>
