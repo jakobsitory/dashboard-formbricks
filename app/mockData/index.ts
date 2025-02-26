@@ -80,7 +80,7 @@ export const defaultChartSettings: ChartSettings = {
 
 // Navigation data
 export const navigationItems = [
-  { name: "Surveys", href: "/surveys", icon: "ClipboardList" },
+  { name: "Surveys", href: "/surveys", icon: "MessageCircle" },
   { name: "Dashboards", href: "/dashboards", icon: "LayoutDashboard" },
   { name: "Contacts", href: "/contacts", icon: "Users2" },
   { name: "Actions", href: "/actions", icon: "ListTodo" },

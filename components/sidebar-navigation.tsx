@@ -1,6 +1,6 @@
 "use client"
 
-import { LayoutDashboard, ClipboardList, Users2, ListTodo, FolderKanban, Settings } from "lucide-react"
+import { LayoutDashboard, ClipboardList, Users2, ListTodo, FolderKanban, Settings, MessageCircle, Cog, User, MousePointerClick, Blocks } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -19,12 +19,12 @@ import { navigationItems, mockUserProfile } from "@/app/mockData"
 
 // Map of icon components for use with navigation data
 const iconMap = {
-  ClipboardList,
+  MessageCircle,
   LayoutDashboard,
-  Users2,
-  ListTodo,
-  FolderKanban,
-  Settings
+  User,
+  MousePointerClick,
+  Blocks,
+  Cog
 };
 
 // Define a type for the iconMap keys

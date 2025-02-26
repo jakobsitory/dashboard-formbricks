@@ -1,7 +1,7 @@
 "use client"
 
 import type * as React from "react"
-import { LayoutDashboard, ClipboardList, Users2, ListTodo, FolderKanban, Settings } from "lucide-react"
+import { LayoutDashboard, ClipboardList, User, Blocks, MessageCircle, MousePointerClick, Cog } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import './globals.css'
@@ -22,12 +22,12 @@ import {
 const inter = Inter({ subsets: ['latin'] })
 
 const navigation = [
-  { name: "Surveys", href: "/surveys", icon: ClipboardList },
+  { name: "Surveys", href: "/surveys", icon: MessageCircle },
   { name: "Dashboards", href: "/dashboards", icon: LayoutDashboard },
-  { name: "Contacts", href: "/contacts", icon: Users2 },
-  { name: "Actions", href: "/actions", icon: ListTodo },
-  { name: "Integrations", href: "/integrations", icon: FolderKanban },
-  { name: "Configuration", href: "/configuration", icon: Settings },
+  { name: "Contacts", href: "/contacts", icon: User },
+  { name: "Actions", href: "/actions", icon: MousePointerClick },
+  { name: "Integrations", href: "/integrations", icon: Blocks },
+  { name: "Configuration", href: "/configuration", icon: Cog },
 ]
 
 export default function RootLayout({
@@ -99,7 +99,7 @@ export default function RootLayout({
               </SidebarFooter>
               <SidebarRail />
             </Sidebar>
-            <div className="flex-1 overflow-auto bg-white">{children}</div>
+            <div className="flex-1 overflow-auto bg-slate-50">{children}</div>
           </div>
         </SidebarProvider>
       </body>
