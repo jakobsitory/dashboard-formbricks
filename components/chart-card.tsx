@@ -1,6 +1,6 @@
 import type * as React from "react"
 import { Copy, Edit2, SlidersHorizontal, Trash2 } from "lucide-react"
-import { Bar, BarChart, Line, LineChart, Pie, PieChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, Line, LineChart, Pie, PieChart, ResponsiveContainer, XAxis, YAxis, Cell } from "recharts"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -16,23 +16,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { sampleData, pieData } from "@/app/mockData/chartData"
 
-// Sample data for the charts
-const sampleData = [
-  { name: "Jan", value: 400 },
-  { name: "Feb", value: 300 },
-  { name: "Mar", value: 600 },
-  { name: "Apr", value: 800 },
-  { name: "May", value: 500 },
-  { name: "Jun", value: 700 },
-]
-
-const pieData = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-]
 
 interface Chart {
   id: string
@@ -52,6 +37,14 @@ interface ChartCardProps {
 }
 
 function ChartPreview({ type, data }: { type: Chart["chartType"]; data: any[] }) {
+  // Add custom colors for pie chart segments
+  const pieColors = [
+    "var(--formbricks-500)",
+    "var(--formbricks-400)",
+    "var(--formbricks-300)",
+    "var(--formbricks-200)",
+  ];
+
   switch (type) {
     case "pie":
       return (
@@ -61,12 +54,14 @@ function ChartPreview({ type, data }: { type: Chart["chartType"]; data: any[] })
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={60}
               outerRadius={80}
-              fill="var(--brand)"
               dataKey="value"
               label
-            />
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
+              ))}
+            </Pie>
           </PieChart>
         </ResponsiveContainer>
       )
@@ -74,9 +69,20 @@ function ChartPreview({ type, data }: { type: Chart["chartType"]; data: any[] })
       return (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Bar dataKey="value" fill="var(--brand)" />
+            <XAxis 
+              dataKey="name" 
+              stroke="var(--formbricks-700)"
+              fontSize={12}
+            />
+            <YAxis 
+              stroke="var(--formbricks-700)"
+              fontSize={12}
+            />
+            <Bar 
+              dataKey="value" 
+              fill="var(--formbricks-500)"
+              radius={[4, 4, 0, 0]}
+            />
           </BarChart>
         </ResponsiveContainer>
       )
@@ -84,9 +90,26 @@ function ChartPreview({ type, data }: { type: Chart["chartType"]; data: any[] })
       return (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Line type="monotone" dataKey="value" stroke="var(--brand)" strokeWidth={2} />
+            <XAxis 
+              dataKey="name" 
+              stroke="var(--formbricks-700)"
+              fontSize={12}
+            />
+            <YAxis 
+              stroke="var(--formbricks-700)"
+              fontSize={12}
+            />
+            <Line 
+              type="monotone" 
+              dataKey="value" 
+              stroke="var(--formbricks-500)"
+              strokeWidth={2}
+              dot={{
+                fill: "var(--formbricks-500)",
+                stroke: "var(--formbricks-600)",
+                strokeWidth: 2,
+              }}
+            />
           </LineChart>
         </ResponsiveContainer>
       )
