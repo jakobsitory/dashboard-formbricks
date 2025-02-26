@@ -1,6 +1,6 @@
 import type * as React from "react"
 import { Copy, Edit2, SlidersHorizontal, Trash2 } from "lucide-react"
-import { Bar, BarChart, Line, LineChart, Pie, PieChart, ResponsiveContainer, XAxis, YAxis, Cell } from "recharts"
+import { Bar, BarChart, Line, LineChart, Pie, PieChart, ResponsiveContainer, XAxis, YAxis, Cell, LabelList } from "recharts"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -17,7 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { sampleData, pieData } from "@/app/mockData/chartData"
-
+import { Badge } from "@/components/ui/badge"
 
 interface Chart {
   id: string
@@ -45,10 +45,38 @@ function ChartPreview({ type, data }: { type: Chart["chartType"]; data: any[] })
     "var(--formbricks-200)",
   ];
 
+  const CustomBarLabel = (props: any) => {
+    const { x, y, width, value, name } = props;
+    return (
+      <g>
+        {/* Name label on the left */}
+        <text 
+          x={x + 8} 
+          y={y + 15} 
+          textAnchor="start" 
+          fill="var(--foreground)"
+          fontSize={12}
+        >
+          {name.slice(0, 3)}
+        </text>
+        {/* Value label on the right */}
+        <text 
+          x={x + width + 8} 
+          y={y + 15} 
+          textAnchor="start" 
+          fill="var(--foreground)"
+          fontSize={12}
+        >
+          {value}
+        </text>
+      </g>
+    );
+  };
+
   switch (type) {
     case "pie":
       return (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={300}>
           <PieChart>
             <Pie
               data={data}
@@ -67,28 +95,35 @@ function ChartPreview({ type, data }: { type: Chart["chartType"]; data: any[] })
       )
     case "bar":
       return (
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data}>
-            <XAxis 
-              dataKey="name" 
-              stroke="var(--formbricks-700)"
-              fontSize={12}
+        <ResponsiveContainer width="100%" height={Math.max(200, data.length * 50)}>
+          <BarChart
+            data={data}
+            layout="vertical"
+            margin={{ top: 5, right: 32, bottom: 5, left: 16 }}
+          >
+            <YAxis
+              type="category"
+              dataKey="name"
+              hide
             />
-            <YAxis 
-              stroke="var(--formbricks-700)"
-              fontSize={12}
+            <XAxis
+              type="number"
+              hide
             />
-            <Bar 
-              dataKey="value" 
-              fill="var(--formbricks-500)"
-              radius={[4, 4, 0, 0]}
-            />
+            <Bar
+              dataKey="value"
+              fill="var(--brand)"
+              radius={[4, 4, 4, 4]}
+              barSize={30}
+            >
+              <LabelList content={<CustomBarLabel />} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       )
     case "line":
       return (
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
             <XAxis 
               dataKey="name" 
@@ -167,7 +202,7 @@ export function ChartCard({ chart, onEdit, onClone, onDelete }: ChartCardProps) 
         </div>
       </CardHeader>
       <CardContent>
-        <div className="h-[200px]">
+        <div className="w-full">
           <ChartPreview type={chart.chartType} data={chart.chartType === "pie" ? pieData : sampleData} />
         </div>
       </CardContent>

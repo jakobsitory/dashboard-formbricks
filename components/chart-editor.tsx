@@ -110,178 +110,168 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
               placeholder="Chart Title"
             />
             <div className="flex items-center gap-2">
-              <Button variant="outline" size="sm">
-                <Plus className="mr-2 h-4 w-4" />
-                New
-              </Button>
-              <Button variant="outline" size="sm">
-                <Edit2 className="mr-2 h-4 w-4" />
-                Edit
-              </Button>
-              <Button variant="outline" size="sm">
-                <Send className="mr-2 h-4 w-4" />
-                Send
-              </Button>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem>
-                    <Copy className="mr-2 h-4 w-4" />
-                    Duplicate
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
             </div>
           </div>
-          <Button onClick={() => handleSave()}>Save to Dashboard</Button>
+		  <div className="flex items-center gap-4">
+			<Button variant="destructive">
+		    	<Send className="mr-2 h-4 w-4" />
+		     	cancel
+		    </Button>
+          <Button onClick={() => handleSave()}>Save</Button>
+		  </div>
         </div>
 
         <div className="grid grid-cols-2 divide-x">
           <div className="flex flex-col divide-y">
-            <div className="space-y-4 p-4">
-              <div>
-                <Label className="text-sm font-medium">Data Source</Label>
-                <ToggleGroup
-                  type="single"
-                  value={settings.dataSource}
-                  onValueChange={(value) => setSettings({ ...settings, dataSource: value as "surveys" | "responses" })}
-                  className="mt-2"
-                >
-                  <ToggleGroupItem value="surveys" className="flex gap-2">
-                    <Search className="h-4 w-4" />
-                    Surveys
-                  </ToggleGroupItem>
-                  <ToggleGroupItem value="responses" className="flex gap-2">
-                    <Search className="h-4 w-4" />
-                    Responses
-                  </ToggleGroupItem>
-                </ToggleGroup>
+            {/* Data Source Section */}
+            <div className="space-y-6 p-4">
+              <div className="space-y-4">
+                <div>
+                  <Label className="text-lg font-semibold">Data Source</Label>
+                  <ToggleGroup
+                    type="single"
+                    value={settings.dataSource}
+                    onValueChange={(value) => setSettings({ ...settings, dataSource: value as "surveys" | "responses" })}
+                    className="mt-2"
+                  >
+                    <ToggleGroupItem value="surveys" className="flex gap-2">
+                      <Search className="h-4 w-4" />
+                      Surveys
+                    </ToggleGroupItem>
+                    <ToggleGroupItem value="responses" className="flex gap-2">
+                      <Search className="h-4 w-4" />
+                      Responses
+                    </ToggleGroupItem>
+                  </ToggleGroup>
+                </div>
+
+                <Command className="rounded-lg border">
+                  <CommandInput placeholder="Add Question" />
+                  <CommandList>
+                    <CommandEmpty>No results found.</CommandEmpty>
+                    {mockSurveys.map((survey) => (
+                      <CommandGroup key={survey.id} heading={survey.name}>
+                        {survey.questions.map((question) => (
+                          <CommandItem
+                            key={question.id}
+                            onSelect={() => {
+                              const itemExists = settings.selectedItems.some(
+                                (item) => item.id === question.id && item.type === "question",
+                              )
+                              setSettings({
+                                ...settings,
+                                selectedItems: itemExists
+                                  ? settings.selectedItems.filter(
+                                      (item) => !(item.id === question.id && item.type === "question"),
+                                    )
+                                  : [...settings.selectedItems, { id: question.id, type: "question" }],
+                              })
+                            }}
+                          >
+                            <div className="flex items-center gap-2">
+                              {settings.selectedItems.some(
+                                (item) => item.id === question.id && item.type === "question",
+                              ) ? (
+                                <div className="rounded-sm bg-brand p-0.5 text-primary">
+                                  <Check className="h-3 w-3" />
+                                </div>
+                              ) : (
+                                <div className="h-3 w-3 rounded-sm border" />
+                              )}
+                              {question.text}
+                            </div>
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    ))}
+                  </CommandList>
+                </Command>
+
+                <Button variant="outline" className="w-full">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add Filter
+                </Button>
               </div>
-
-              <Command className="rounded-lg border">
-                <CommandInput placeholder="Add Question" />
-                <CommandList>
-                  <CommandEmpty>No results found.</CommandEmpty>
-                  {mockSurveys.map((survey) => (
-                    <CommandGroup key={survey.id} heading={survey.name}>
-                      {survey.questions.map((question) => (
-                        <CommandItem
-                          key={question.id}
-                          onSelect={() => {
-                            const itemExists = settings.selectedItems.some(
-                              (item) => item.id === question.id && item.type === "question",
-                            )
-                            setSettings({
-                              ...settings,
-                              selectedItems: itemExists
-                                ? settings.selectedItems.filter(
-                                    (item) => !(item.id === question.id && item.type === "question"),
-                                  )
-                                : [...settings.selectedItems, { id: question.id, type: "question" }],
-                            })
-                          }}
-                        >
-                          <div className="flex items-center gap-2">
-                            {settings.selectedItems.some(
-                              (item) => item.id === question.id && item.type === "question",
-                            ) ? (
-                              <div className="rounded-sm bg-brand p-0.5 text-primary">
-                                <Check className="h-3 w-3" />
-                              </div>
-                            ) : (
-                              <div className="h-3 w-3 rounded-sm border" />
-                            )}
-                            {question.text}
-                          </div>
-                        </CommandItem>
-                      ))}
-                    </CommandGroup>
-                  ))}
-                </CommandList>
-              </Command>
-
-              <Button variant="outline" className="w-full">
-                <Plus className="mr-2 h-4 w-4" />
-                Add Filter
-              </Button>
             </div>
 
-            <div className="space-y-6 p-4">
-              <div className="space-y-2">
-                <Label>Appearance</Label>
-                <ToggleGroup
-                  type="single"
-                  value={settings.chartType}
-                  onValueChange={(value) => setSettings({ ...settings, chartType: value as ChartType })}
-                  className="justify-start"
-                >
-                  <ToggleGroupItem value="pie" className="flex items-center gap-2 px-3">
-                    <PieChart className="h-5 w-5" />
-                    <span>Pie</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem value="bar" className="flex items-center gap-2 px-3">
-                    <BarChart3 className="h-5 w-5" />
-                    <span>Bar</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem value="line" className="flex items-center gap-2 px-3">
-                    <LineChart className="h-5 w-5" />
-                    <span>Line</span>
-                  </ToggleGroupItem>
-                </ToggleGroup>
-              </div>
+            {/* Appearance Section */}
+            <div className="space-y-8 p-4">
+              <div>
+                <Label className="text-lg font-semibold mb-4 block">Appearance</Label>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label>Chart Type</Label>
+                    <ToggleGroup
+                      type="single"
+                      value={settings.chartType}
+                      onValueChange={(value) => setSettings({ ...settings, chartType: value as ChartType })}
+                      className="justify-start"
+                    >
+                      <ToggleGroupItem value="pie" className="flex items-center gap-2 px-3">
+                        <PieChart className="h-5 w-5" />
+                        <span>Pie</span>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="bar" className="flex items-center gap-2 px-3">
+                        <BarChart3 className="h-5 w-5" />
+                        <span>Bar</span>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="line" className="flex items-center gap-2 px-3">
+                        <LineChart className="h-5 w-5" />
+                        <span>Line</span>
+                      </ToggleGroupItem>
+                    </ToggleGroup>
+                  </div>
 
-              <div className="space-y-2">
-                <Label>Time Frame</Label>
-                <ToggleGroup
-                  type="single"
-                  value={settings.timeFrame}
-                  onValueChange={(value) => setSettings({ ...settings, timeFrame: value as TimeFrame })}
-                  className="justify-start"
-                >
-                  <ToggleGroupItem value="day" className="flex items-center gap-2 px-3">
-                    <Clock className="h-5 w-5" />
-                    <span>Day</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem value="week" className="flex items-center gap-2 px-3">
-                    <CalendarDays className="h-5 w-5" />
-                    <span>Week</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem value="month" className="flex items-center gap-2 px-3">
-                    <CalendarDays className="h-5 w-5" />
-                    <span>Month</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem value="year" className="flex items-center gap-2 px-3">
-                    <CalendarDays className="h-5 w-5" />
-                    <span>Year</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem value="total" className="flex items-center gap-2 px-3">
-                    <History className="h-5 w-5" />
-                    <span>Total</span>
-                  </ToggleGroupItem>
-                </ToggleGroup>
-              </div>
+                  <div className="space-y-2">
+                    <Label>Time Frame</Label>
+                    <ToggleGroup
+                      type="single"
+                      value={settings.timeFrame}
+                      onValueChange={(value) => setSettings({ ...settings, timeFrame: value as TimeFrame })}
+                      className="justify-start"
+                    >
+                      <ToggleGroupItem value="day" className="flex items-center gap-2 px-3">
+                        <Clock className="h-5 w-5" />
+                        <span>Day</span>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="week" className="flex items-center gap-2 px-3">
+                        <CalendarDays className="h-5 w-5" />
+                        <span>Week</span>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="month" className="flex items-center gap-2 px-3">
+                        <CalendarDays className="h-5 w-5" />
+                        <span>Month</span>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="year" className="flex items-center gap-2 px-3">
+                        <CalendarDays className="h-5 w-5" />
+                        <span>Year</span>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="total" className="flex items-center gap-2 px-3">
+                        <History className="h-5 w-5" />
+                        <span>Total</span>
+                      </ToggleGroupItem>
+                    </ToggleGroup>
+                  </div>
 
-              <div className="space-y-2">
-                <Label>Sort Order</Label>
-                <ToggleGroup
-                  type="single"
-                  value={settings.sortOrder}
-                  onValueChange={(value) => setSettings({ ...settings, sortOrder: value as SortOrder })}
-                  className="justify-start"
-                >
-                  <ToggleGroupItem value="asc" className="flex items-center gap-2 px-3">
-                    <ArrowUpAZ className="h-5 w-5" />
-                    <span>Ascending</span>
-                  </ToggleGroupItem>
-                  <ToggleGroupItem value="desc" className="flex items-center gap-2 px-3">
-                    <ArrowDownAZ className="h-5 w-5" />
-                    <span>Descending</span>
-                  </ToggleGroupItem>
-                </ToggleGroup>
+                  <div className="space-y-2">
+                    <Label>Sort Order</Label>
+                    <ToggleGroup
+                      type="single"
+                      value={settings.sortOrder}
+                      onValueChange={(value) => setSettings({ ...settings, sortOrder: value as SortOrder })}
+                      className="justify-start"
+                    >
+                      <ToggleGroupItem value="asc" className="flex items-center gap-2 px-3">
+                        <ArrowUpAZ className="h-5 w-5" />
+                        <span>Ascending</span>
+                      </ToggleGroupItem>
+                      <ToggleGroupItem value="desc" className="flex items-center gap-2 px-3">
+                        <ArrowDownAZ className="h-5 w-5" />
+                        <span>Descending</span>
+                      </ToggleGroupItem>
+                    </ToggleGroup>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

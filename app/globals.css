@@ -34,16 +34,16 @@
   --formbricks-error: #d13a3a;
 
   /* Brand Color Grades */
-  --formbricks-50: #e6f7f6;
-  --formbricks-100: #ccefed;
-  --formbricks-200: #99dfdb;
-  --formbricks-300: #66cfc9;
-  --formbricks-400: #33bfb7;
-  --formbricks-500: #038178; /* base brand color */
-  --formbricks-600: #026760;
-  --formbricks-700: #024d48;
-  --formbricks-800: #013330;
-  --formbricks-950: #001a18;
+  --formbricks-50: #e0f9f8;
+  --formbricks-100: #b3f0ed;
+  --formbricks-200: #80e6e1;
+  --formbricks-300: #4ddcd5;
+  --formbricks-400: #26d3ca;
+  --formbricks-500: #00C4B8; /* new base brand color */
+  --formbricks-600: #00a89e;
+  --formbricks-700: #008c84;
+  --formbricks-800: #00706a;
+  --formbricks-950: #003f3c;
 }
 
 @layer base {
