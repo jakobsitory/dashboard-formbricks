@@ -1,6 +1,7 @@
 "use client"
 import { Plus } from "lucide-react"
 import { useRouter } from "next/navigation"
+import type { DashboardStats } from "@/types/dashboard";
 
 import { Button } from "@/components/ui/button"
 import { TitleBar } from "@/components/title-bar"

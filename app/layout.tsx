@@ -6,6 +6,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import './globals.css'
 import { Inter } from 'next/font/google'
+import type { NavigationItem, LayoutProps } from "@/types/layout";
 
 import {
   Sidebar,
@@ -21,7 +22,7 @@ import {
 
 const inter = Inter({ subsets: ['latin'] })
 
-const navigation = [
+const navigation: NavigationItem[] = [
   { name: "Surveys", href: "/surveys", icon: MessageCircle },
   { name: "Dashboards", href: "/dashboards", icon: LayoutDashboard },
   { name: "Contacts", href: "/contacts", icon: User },
@@ -32,9 +33,7 @@ const navigation = [
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: LayoutProps) {
   const pathname = usePathname()
 
   return (
