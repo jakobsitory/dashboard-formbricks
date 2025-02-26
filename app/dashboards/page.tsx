@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import { TitleBar } from "@/components/title-bar"
-import RootLayout from '@/app/layout';
 
 export default function DashboardsPage() {
   const router = useRouter()
