@@ -15,14 +15,20 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-const navigation = [
-  { name: "Surveys", href: "/surveys", icon: ClipboardList },
-  { name: "Dashboards", href: "/dashboards", icon: LayoutDashboard },
-  { name: "Contacts", href: "/contacts", icon: Users2 },
-  { name: "Actions", href: "/actions", icon: ListTodo },
-  { name: "Integrations", href: "/integrations", icon: FolderKanban },
-  { name: "Configuration", href: "/configuration", icon: Settings },
-]
+import { navigationItems, mockUserProfile } from "@/app/mockData"
+
+// Map of icon components for use with navigation data
+const iconMap = {
+  ClipboardList,
+  LayoutDashboard,
+  Users2,
+  ListTodo,
+  FolderKanban,
+  Settings
+};
+
+// Define a type for the iconMap keys
+type IconName = keyof typeof iconMap;
 
 export function SidebarNavigation() {
   const pathname = usePathname()
@@ -53,31 +59,32 @@ export function SidebarNavigation() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-      </SidebarHeader>
-      <SidebarContent>
         <SidebarMenu>
-          {navigation.map((item) => (
-            <SidebarMenuItem key={item.name}>
-              <Link href={item.href}>
-                <SidebarMenuButton tooltip={item.name} isActive={pathname.startsWith(item.href)}>
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.name}</span>
-                </SidebarMenuButton>
-              </Link>
-            </SidebarMenuItem>
-          ))}
+          {navigationItems.map((item) => {
+            const IconComponent = iconMap[item.icon as IconName];
+            return (
+              <SidebarMenuItem key={item.name}>
+                <Link href={item.href}>
+                  <SidebarMenuButton tooltip={item.name} isActive={pathname.startsWith(item.href)}>
+                    {IconComponent && <IconComponent className="h-4 w-4" />}
+                    <span>{item.name}</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
-      </SidebarContent>
+      </SidebarHeader>
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" tooltip="Profile" className="flex items-center gap-3">
               <div className="flex aspect-square size-8 items-center justify-center rounded-full bg-brand text-primary">
-                JD
+                {mockUserProfile.initials}
               </div>
               <div className="flex flex-col items-start">
-                <span className="text-sm font-medium">John Doe</span>
-                <span className="text-xs text-muted-foreground">john@example.com</span>
+                <span className="text-sm font-medium">{mockUserProfile.name}</span>
+                <span className="text-xs text-muted-foreground">{mockUserProfile.email}</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>

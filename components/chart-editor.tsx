@@ -27,44 +27,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-// Types from your existing code
-type ChartType = "pie" | "bar" | "line"
-type TimeFrame = "day" | "week" | "month" | "year" | "total"
-type SortOrder = "asc" | "desc"
-
-interface ChartSettings {
-  title: string
-  dataSource: "surveys" | "responses"
-  selectedItems: Array<{ id: number; type: "survey" | "question" }>
-  chartType: ChartType
-  timeFrame: TimeFrame
-  sortOrder: SortOrder
-}
-
-// Sample data
-const surveys = [
-  {
-    id: 1,
-    name: "Survey 1",
-    questions: [
-      { id: 1, text: "This is a question regarding our product", type: "rating" },
-      { id: 2, text: "Multi-Select question on our product", type: "multi" },
-      { id: 3, text: "Multi-Select question on our product", type: "multi" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Survey 2",
-    questions: [{ id: 4, text: "Command Item Text", type: "text" }],
-  },
-]
-
-const sampleData = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-]
+// Import types and mock data from centralized data file
+import { ChartSettings, ChartType, TimeFrame, SortOrder, mockSurveys, mockChartData, defaultChartSettings } from "@/app/mockData"
 
 interface ChartEditorProps {
   onSave: (settings: ChartSettings) => void
@@ -79,14 +43,7 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
   const editorRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const [settings, setSettings] = React.useState<ChartSettings>(
-    initialSettings || {
-      title: "Chart Title",
-      dataSource: "surveys",
-      selectedItems: [],
-      chartType: "pie",
-      timeFrame: "month",
-      sortOrder: "desc",
-    },
+    initialSettings || defaultChartSettings
   )
 
   React.useEffect(() => {
@@ -209,7 +166,7 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
                 <CommandInput placeholder="Add Question" />
                 <CommandList>
                   <CommandEmpty>No results found.</CommandEmpty>
-                  {surveys.map((survey) => (
+                  {mockSurveys.map((survey) => (
                     <CommandGroup key={survey.id} heading={survey.name}>
                       {survey.questions.map((question) => (
                         <CommandItem
@@ -344,7 +301,7 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
                       {settings.chartType === "pie" ? (
                         <PieChart>
                           <Pie
-                            data={sampleData}
+                            data={mockChartData}
                             cx="50%"
                             cy="50%"
                             innerRadius={60}
@@ -355,13 +312,13 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
                           />
                         </PieChart>
                       ) : settings.chartType === "bar" ? (
-                        <BarChart data={sampleData}>
+                        <BarChart data={mockChartData}>
                           <XAxis dataKey="name" />
                           <YAxis />
                           <Bar dataKey="value" fill="var(--brand)" />
                         </BarChart>
                       ) : (
-                        <LineChart data={sampleData}>
+                        <LineChart data={mockChartData}>
                           <XAxis dataKey="name" />
                           <YAxis />
                           <Line type="monotone" dataKey="value" stroke="var(--brand)" strokeWidth={2} />

@@ -21,28 +21,14 @@ import {
 import { ChartCard } from "@/components/chart-card"
 import { AddChartCard } from "@/components/add-chart-card"
 
-type ChartType = "pie" | "bar" | "line"
-type TimeFrame = "day" | "week" | "month" | "year" | "total"
-type SortOrder = "asc" | "desc"
-
-interface ChartSettings {
-  title: string
-  dataSource: "surveys" | "responses"
-  selectedItems: Array<{ id: number; type: "survey" | "question" }>
-  chartType: ChartType
-  timeFrame: TimeFrame
-  sortOrder: SortOrder
-}
-
-interface Chart extends ChartSettings {
-  id: string
-}
+// Import types and mock data
+import { Chart, ChartSettings, mockDashboardData } from "@/app/mockData"
 
 export default function DashboardDetail() {
   const params = useParams()
   const router = useRouter()
-  const [title, setTitle] = React.useState("Untitled Dashboard")
-  const [charts, setCharts] = React.useState<Chart[]>([])
+  const [title, setTitle] = React.useState(mockDashboardData.title)
+  const [charts, setCharts] = React.useState<Chart[]>(mockDashboardData.charts)
   const [isAddingChart, setIsAddingChart] = React.useState(false)
   const [editingChart, setEditingChart] = React.useState<Chart | null>(null)
   const [sourceRect, setSourceRect] = React.useState<DOMRect | null>(null)
