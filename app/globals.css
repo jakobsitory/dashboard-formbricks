@@ -11,6 +11,8 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 255, 255, 255;
+
+  --formbricks-background: #F8FAFC;
   /* Brand Colors */
   --formbricks-brand: #038178;
 
@@ -248,7 +250,10 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
 }
 
-
+.matchWidth {
+  width: var(--radix-popover-trigger-width);
+  max-height: var(--radix-popover-content-available-height);
+}
 
 @layer base {
   * {

@@ -86,7 +86,7 @@ export default function RootLayout({
               </SidebarFooter>
               <SidebarRail />
             </Sidebar>
-            <div className="flex-1 overflow-auto bg-slate-50">{children}</div>
+            <div className="flex-1 overflow-auto ">{children}</div>
           </div>
         </SidebarProvider>
       </body>

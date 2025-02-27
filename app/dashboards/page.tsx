@@ -25,7 +25,8 @@ export default function DashboardsPage() {
             <Button
               variant="outline"
               className="flex h-[300px] flex-col items-center justify-center gap-4 rounded-lg border-2 border-dashed border-secondary hover:border-brand hover:bg-accent"
-              onClick={() => router.push("/dashboards/new")}
+              onClick={() => router.push("/dashboards/new")
+			  }
             >
               <Plus className="h-8 w-8" />
               <span>Create Dashboard</span>

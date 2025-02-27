@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Check, ChevronsUpDown, Search, BarChart, ListChecks, FileText, MessageSquare } from "lucide-react"
+import { Check, ChevronsUpDown, Search, BarChart, List, FileText, MessageSquare, Rows3Icon, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -16,26 +16,24 @@ const surveys = [
 ]
 
 const questionTypes = {
-  "multiple-choice": { icon: ListChecks, label: "Multiple Choice" },
-  text: { icon: FileText, label: "Text" },
-  rating: { icon: BarChart, label: "Rating" },
-  "open-ended": { icon: MessageSquare, label: "Open Ended" },
-}
+  "multiple-choice-single-select": { icon: List, label: "Single Select" },
+  "multiple-choice-multiple-select": { icon: Rows3Icon, label: "Multiple Select" },
+  }
 
 const questions = [
-  { id: "101", surveyId: "1", text: "How satisfied are you with our service?", type: "rating" },
-  { id: "102", surveyId: "1", text: "What improvements would you suggest?", type: "open-ended" },
-  { id: "103", surveyId: "1", text: "Would you recommend us to others?", type: "multiple-choice" },
-  { id: "201", surveyId: "2", text: "How would you rate your work-life balance?", type: "rating" },
-  { id: "202", surveyId: "2", text: "Do you feel valued at work?", type: "multiple-choice" },
-  { id: "203", surveyId: "2", text: "What would improve your workplace experience?", type: "open-ended" },
-  { id: "301", surveyId: "3", text: "Which features do you use most often?", type: "multiple-choice" },
-  { id: "302", surveyId: "3", text: "How easy is our product to use?", type: "rating" },
-  { id: "303", surveyId: "3", text: "What features would you like to see added?", type: "text" },
-  { id: "401", surveyId: "4", text: "How easy was it to find what you were looking for?", type: "rating" },
-  { id: "402", surveyId: "4", text: "Did you encounter any issues while using our website?", type: "multiple-choice" },
-  { id: "501", surveyId: "5", text: "Which of our competitors do you also use?", type: "multiple-choice" },
-  { id: "502", surveyId: "5", text: "What factors influence your purchasing decisions?", type: "open-ended" },
+  { id: "101", surveyId: "1", text: "How satisfied are you with our service?", type: "multiple-choice-single-select" },
+  { id: "102", surveyId: "1", text: "What improvements would you suggest?", type: "multiple-choice-single-select" },
+  { id: "103", surveyId: "1", text: "Would you recommend us to others?", type: "multiple-choice-multiple-select" },
+  { id: "201", surveyId: "2", text: "How would you rate your work-life balance?", type: "multiple-choice-single-select" },
+  { id: "202", surveyId: "2", text: "Do you feel valued at work?", type: "multiple-choice-multiple-select" },
+  { id: "203", surveyId: "2", text: "What would improve your workplace experience?", type: "multiple-choice-single-select" },
+  { id: "301", surveyId: "3", text: "Which features do you use most often?", type: "multiple-choice-multiple-select" },
+  { id: "302", surveyId: "3", text: "How easy is our product to use?", type: "multiple-choice-single-select" },
+  { id: "303", surveyId: "3", text: "What features would you like to see added?", type: "multiple-choice-single-select" },
+  { id: "401", surveyId: "4", text: "How easy was it to find what you were looking for?", type: "multiple-choice-single-select" },
+  { id: "402", surveyId: "4", text: "Did you encounter any issues while using our website?", type: "multiple-choice-multiple-select" },
+  { id: "501", surveyId: "5", text: "Which of our competitors do you also use?", type: "multiple-choice-single-select" },
+  { id: "502", surveyId: "5", text: "What factors influence your purchasing decisions?", type: "multiple-choice-multiple-select" },
 ]
 
 export default function SurveyQuestionSelector() {
@@ -78,10 +76,10 @@ export default function SurveyQuestionSelector() {
   }, [selectedSurvey, filteredQuestions])
 
   return (
-    <div className="flex flex-col space-y-4 w-full max-w-md">
+    <div className="flex flex-col space-y-4 w-full ">
       <div className="flex flex-col space-y-2">
         <label htmlFor="survey-select" className="text-sm font-medium">
-          Select Survey
+          Survey
         </label>
         <Popover open={openSurvey} onOpenChange={setOpenSurvey}>
           <PopoverTrigger asChild>
@@ -89,15 +87,15 @@ export default function SurveyQuestionSelector() {
               id="survey-select"
               variant="outline"
               role="combobox"
-              aria-expanded={openSurvey}
+            //   aria-expanded={openSurvey}
               className="justify-between"
             >
-              {selectedSurveyObject ? selectedSurveyObject.title : "Select a survey..."}
+	            {selectedSurveyObject ? selectedSurveyObject.title : "Select a survey..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </Button>
+			</Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[400px] p-0">
-            <Command>
+          <PopoverContent className="p-0 matchWidth">
+            <Command className="w-full">
               <CommandInput placeholder="Search surveys..." className="h-9" />
               <CommandList>
                 <CommandEmpty>No surveys found.</CommandEmpty>
@@ -128,7 +126,7 @@ export default function SurveyQuestionSelector() {
 
       <div className="flex flex-col space-y-2">
         <label htmlFor="question-select" className="text-sm font-medium">
-          Select Question
+          Question
         </label>
         <Popover open={openQuestion} onOpenChange={setOpenQuestion}>
           <PopoverTrigger asChild>
@@ -143,8 +141,8 @@ export default function SurveyQuestionSelector() {
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-[400px] p-0">
-            <Command>
+          <PopoverContent className="p-0 matchWidth">
+            <Command className="w-full">
               <CommandInput placeholder="Search questions..." className="h-9" />
               <CommandList>
                 <CommandEmpty>No questions found.</CommandEmpty>

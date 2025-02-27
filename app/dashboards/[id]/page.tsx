@@ -77,14 +77,19 @@ export default function DashboardDetail() {
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col bg-formbricks-background">
       <TopControlBar />
-      <TitleBar title={title}>
+      <TitleBar 
+        title="Dashboards"
+        subtitle={title}
+        subtitlePlaceholder="Dashboard Name"
+        onSubtitleChange={setTitle}
+      >
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline">
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete Dashboard
+              Delete
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
@@ -102,11 +107,10 @@ export default function DashboardDetail() {
         </AlertDialog>
         <Button variant="outline">
           <Share2 className="mr-2 h-4 w-4" />
-          Share Dashboard
+          Share
         </Button>
-        <Button onClick={() => setIsAddingChart(true)}>
-          <Plus className="mr-2 h-4 w-4" />
-          Create Chart
+        <Button>
+          Save
         </Button>
       </TitleBar>
 

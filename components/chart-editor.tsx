@@ -3,32 +3,20 @@
 import * as React from "react"
 import { useRef } from "react"
 import {
-  ArrowDownAZ,
-  ArrowUpAZ,
   BarChartHorizontal,
-  CalendarDays,
   Database,
   ChartSplineIcon,
   PieChartIcon,
   PaintbrushIcon,
   EyeIcon,
 } from "lucide-react"
-import { Bar, BarChart, Line, LineChart, Pie, PieChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
-import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-  } from "@/components/ui/tabs"
-
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import SurveyQuestionSelector from "@/components/survey-question-selector"
+import { ChartCard } from "@/components/chart-card"
 
 // Import types and mock data from centralized data file
 import { ChartSettings, ChartType, TimeFrame, SortOrder, mockSurveys, mockChartData, defaultChartSettings } from "@/app/mockData"
@@ -189,16 +177,16 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
 						className="justify-start rounded-lg border border-slate-300 p-1"
 						>
 						<ToggleGroupItem value="day" className="flex-1 items-center gap-2 px-3">
-							<span>Day</span>
+							<span>Today</span>
 						</ToggleGroupItem>
 						<ToggleGroupItem value="week" className="flex-1 items-center gap-2 px-3">
-							<span>Week</span>
+							<span>Last 7 Days</span>
 						</ToggleGroupItem>
 						<ToggleGroupItem value="month" className="flex-1 flex items-center gap-2 px-3">
-							<span>Month</span>
+							<span>Last 30 Days</span>
 						</ToggleGroupItem>
 						<ToggleGroupItem value="year" className="flex-1 items-center gap-2 px-3">
-							<span>Year</span>
+							<span>This Year</span>
 						</ToggleGroupItem>
 						<ToggleGroupItem value="total" className="flex-1 items-center gap-2 px-3">
 							<span>Total</span>
@@ -211,61 +199,25 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
           </div>
 
           <div className="p-4">
-		  {/* Data Source Section */}
-			<div className="flex flex-col rounded-lg border border-slate-300">
-				<div className="flex items-center gap-x-2 rounded-t-lg border-b border-slate-300 bg-slate-100 px-4 py-2">
-					<div className="rounded-full border border-slate-300 bg-white p-1">
-						<EyeIcon className="h-3 w-3 text-slate-500" />				
-					</div>
-					<h2 className="text-md font-semibold text-slate-900">
-						Preview
-					</h2>
-				</div>
-				<div className="space-y-4 p-4">
-					<Card className="h-full">
-					<div className="flex h-full flex-col">
-						<div className="border-b p-4">
-						<h3 className="text-lg font-semibold">{settings.title || "Chart Preview"}</h3>
-						<p className="text-sm text-muted-foreground">
-							{settings.selectedItems.length} items selected • {settings.timeFrame} view
-						</p>
-						</div>
-						<div className="flex-1 p-6">
-						<div className="h-full min-h-[300px]">
-							<ResponsiveContainer width="100%" height="100%">
-							{settings.chartType === "pie" ? (
-								<PieChart>
-								<Pie
-									data={mockChartData}
-									cx="50%"
-									cy="50%"
-									innerRadius={60}
-									outerRadius={80}
-									fill="var(--brand)"
-									dataKey="value"
-									label
-								/>
-								</PieChart>
-							) : settings.chartType === "bar" ? (
-								<BarChart data={mockChartData}>
-								<XAxis dataKey="name" />
-								<YAxis />
-								<Bar dataKey="value" fill="var(--brand)" />
-								</BarChart>
-							) : (
-								<LineChart data={mockChartData}>
-								<XAxis dataKey="name" />
-								<YAxis />
-								<Line type="monotone" dataKey="value" stroke="var(--brand)" strokeWidth={2} />
-								</LineChart>
-							)}
-							</ResponsiveContainer>
-						</div>
-						</div>
-					</div>
-					</Card>
-				</div>
-				</div>
+            <div className="flex flex-col rounded-lg border border-slate-300">
+              <div className="flex items-center gap-x-2 rounded-t-lg border-b border-slate-300 bg-slate-100 px-4 py-2">
+                <div className="rounded-full border border-slate-300 bg-white p-1">
+                  <EyeIcon className="h-3 w-3 text-slate-500" />        
+                </div>
+                <h2 className="text-md font-semibold text-slate-900">
+                  Preview
+                </h2>
+              </div>
+              <div className="space-y-4 p-4">
+        <ChartCard 
+          chart={{...settings, id: "preview-chart"}}
+          onEdit={() => {}}
+          onClone={() => {}}
+          onDelete={() => {}}
+          preview={true}
+        />
+			  </div>
+            </div>
           </div>
         </div>
       </div>
