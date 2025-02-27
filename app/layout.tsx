@@ -10,6 +10,7 @@ import { Inter } from 'next/font/google'
 import FBLogo from "@/images/formbricks-wordmark.svg";
 import type { NavigationItem, LayoutProps } from "@/types/layout";
 
+
 import {
   Sidebar,
   SidebarContent,

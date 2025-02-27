@@ -23,6 +23,7 @@ import { AddChartCard } from "@/components/add-chart-card"
 
 // Import types and mock data
 import { Chart, ChartSettings, mockDashboardData } from "@/app/mockData"
+import { TopControlBar } from "@/components/top-control-bar"
 
 export default function DashboardDetail() {
   const params = useParams()
@@ -77,6 +78,7 @@ export default function DashboardDetail() {
 
   return (
     <div className="flex h-full flex-col">
+      <TopControlBar />
       <TitleBar title={title}>
         <AlertDialog>
           <AlertDialogTrigger asChild>
