@@ -17,7 +17,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { sampleData, pieData } from "@/app/mockData/chartData"
-import { Badge } from "@/components/ui/badge"
 
 interface Chart {
   id: string
