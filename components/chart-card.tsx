@@ -1,5 +1,5 @@
 import type * as React from "react"
-import { Copy, Edit2, SlidersHorizontal, Trash2 } from "lucide-react"
+import { Copy, Edit2, EllipsisVerticalIcon, SlidersHorizontal, Trash2 } from "lucide-react"
 import { Bar, BarChart, Line, LineChart, Pie, PieChart, ResponsiveContainer, XAxis, YAxis, Cell, LabelList } from "recharts"
 
 import { Button } from "@/components/ui/button"
@@ -39,33 +39,33 @@ interface ChartCardProps {
 function ChartPreview({ type, data }: { type: Chart["chartType"]; data: any[] }) {
   // Add custom colors for pie chart segments
   const pieColors = [
+    "var(--formbricks-900)",
+    "var(--formbricks-700)",
     "var(--formbricks-500)",
-    "var(--formbricks-400)",
     "var(--formbricks-300)",
-    "var(--formbricks-200)",
   ];
 
   const CustomBarLabel = (props: any) => {
     const { x, y, width, value, name } = props;
     return (
       <g>
-        {/* Name label on the left */}
         <text 
           x={x + 8} 
-          y={y + 15} 
+          y={y + 20} 
           textAnchor="start" 
           fill="var(--foreground)"
           fontSize={12}
+          className="p-1"
         >
           {name.slice(0, 3)}
         </text>
-        {/* Value label on the right */}
         <text 
           x={x + width + 8} 
-          y={y + 15} 
+          y={y + 20} 
           textAnchor="start" 
           fill="var(--foreground)"
           fontSize={12}
+          className="p-1"
         >
           {value}
         </text>
@@ -99,7 +99,7 @@ function ChartPreview({ type, data }: { type: Chart["chartType"]; data: any[] })
           <BarChart
             data={data}
             layout="vertical"
-            margin={{ top: 5, right: 32, bottom: 5, left: 16 }}
+            margin={{ top: 5, right: 16, bottom: 5, left: 0 }}
           >
             <YAxis
               type="category"
@@ -166,7 +166,7 @@ export function ChartCard({ chart, onEdit, onClone, onDelete, preview }: ChartCa
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
-                  <SlidersHorizontal className="h-4 w-4" />
+                  <EllipsisVerticalIcon className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">

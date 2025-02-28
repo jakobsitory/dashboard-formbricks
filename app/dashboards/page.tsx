@@ -11,7 +11,7 @@ export default function DashboardsPage() {
   const router = useRouter()
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col formbricks-background">
       <TopControlBar />
       <div className="flex flex-col flex-1">
         <TitleBar title="Dashboards">

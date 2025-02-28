@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useParams, useRouter } from "next/navigation"
-import { Plus, Share2, Trash2 } from "lucide-react"
+import { Plus, SaveIcon, Share2, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { ChartEditor } from "@/components/chart-editor"
@@ -77,7 +77,7 @@ export default function DashboardDetail() {
   }
 
   return (
-    <div className="flex h-full flex-col bg-formbricks-background">
+    <div className="flex h-full flex-col formbricks-background">
       <TopControlBar />
       <TitleBar 
         title="Dashboards"
@@ -110,6 +110,7 @@ export default function DashboardDetail() {
           Share
         </Button>
         <Button>
+			<SaveIcon className="mr-2 h-4 w-4" />
           Save
         </Button>
       </TitleBar>

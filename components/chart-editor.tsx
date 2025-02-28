@@ -150,21 +150,30 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
 						<Label>Chart Type</Label>
 						<ToggleGroup
 						type="single"
+						defaultValue={settings.chartType}
 						value={settings.chartType}
-						onValueChange={(value) => setSettings({ ...settings, chartType: value as ChartType })}
+						onValueChange={(value) => {
+							if (value) setSettings({ ...settings, chartType: value as ChartType })
+						}}
 						className="justify-start rounded-lg border border-slate-300 p-1"
 						>
-						<ToggleGroupItem value="pie" className="flex-1 items-center gap-2 px-3">
-							<PieChartIcon className="h-5 w-5" />
-							<span>Pie</span>
+						<ToggleGroupItem value="pie" className="flex-1 h-9">
+							<div className="flex items-center justify-center w-full gap-1">
+								<span>Pie</span>
+								<PieChartIcon className="h-5 w-5" />
+							</div>
 						</ToggleGroupItem>
-						<ToggleGroupItem value="bar" className="flex-1 items-center gap-2 px-3">
-							<BarChartHorizontal className="h-5 w-5" />
-							<span>Bar</span>
+						<ToggleGroupItem value="bar" className="flex-1 h-9">
+							<div className="flex items-center justify-center w-full gap-1">
+								<span>Bar</span>
+								<BarChartHorizontal className="h-5 w-5" />
+							</div>
 						</ToggleGroupItem>
-						<ToggleGroupItem value="line" className="flex-1 items-center gap-2 px-3">
-							<ChartSplineIcon className="h-5 w-5" />
-							<span>Line</span>
+						<ToggleGroupItem value="line" className="flex-1 h-9">
+							<div className="flex items-center justify-center w-full gap-1">
+								<span>Line</span>
+								<ChartSplineIcon className="h-5 w-5" />
+							</div>
 						</ToggleGroupItem>
 						</ToggleGroup>
 					</div>
@@ -172,24 +181,37 @@ export function ChartEditor({ onSave, initialSettings, onCancel, className }: Ch
 						<Label>Time Frame</Label>
 						<ToggleGroup
 						type="single"
+						defaultValue={settings.timeFrame}
 						value={settings.timeFrame}
-						onValueChange={(value) => setSettings({ ...settings, timeFrame: value as TimeFrame })}
+						onValueChange={(value) => {
+							if (value) setSettings({ ...settings, timeFrame: value as TimeFrame })
+						}}
 						className="justify-start rounded-lg border border-slate-300 p-1"
 						>
-						<ToggleGroupItem value="day" className="flex-1 items-center gap-2 px-3">
-							<span>Today</span>
+						<ToggleGroupItem value="day" className="flex-1 h-9">
+							<div className="flex items-center justify-center w-full">
+								<span>Today</span>
+							</div>
 						</ToggleGroupItem>
-						<ToggleGroupItem value="week" className="flex-1 items-center gap-2 px-3">
-							<span>Last 7 Days</span>
+						<ToggleGroupItem value="week" className="flex-1 h-9">
+							<div className="flex items-center justify-center w-full">
+								<span>Last 7 Days</span>
+							</div>
 						</ToggleGroupItem>
-						<ToggleGroupItem value="month" className="flex-1 flex items-center gap-2 px-3">
-							<span>Last 30 Days</span>
+						<ToggleGroupItem value="month" className="flex-1 h-9">
+							<div className="flex items-center justify-center w-full">
+								<span>Last 30 Days</span>
+							</div>
 						</ToggleGroupItem>
-						<ToggleGroupItem value="year" className="flex-1 items-center gap-2 px-3">
-							<span>This Year</span>
+						<ToggleGroupItem value="year" className="flex-1 h-9">
+							<div className="flex items-center justify-center w-full">
+								<span>This Year</span>
+							</div>
 						</ToggleGroupItem>
-						<ToggleGroupItem value="total" className="flex-1 items-center gap-2 px-3">
-							<span>Total</span>
+						<ToggleGroupItem value="total" className="flex-1 h-9">
+							<div className="flex items-center justify-center w-full">
+								<span>Total</span>
+							</div>
 						</ToggleGroupItem>
 						</ToggleGroup>
 					</div>

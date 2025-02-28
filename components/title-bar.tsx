@@ -29,7 +29,7 @@ export function TitleBar({ title, subtitle, subtitlePlaceholder, onSubtitleChang
             </>
           )}
         </div>
-        <div className="flex items-center gap-2">{children}</div>
+        <div className="flex items-center gap-2 [&>button]:flex-row-reverse">{children}</div>
       </div>
     </header>
   )

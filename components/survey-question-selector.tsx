@@ -79,7 +79,7 @@ export default function SurveyQuestionSelector() {
     <div className="flex flex-col space-y-4 w-full ">
       <div className="flex flex-col space-y-2">
         <label htmlFor="survey-select" className="text-sm font-medium">
-          Survey
+			Filter by Survey (Optional)
         </label>
         <Popover open={openSurvey} onOpenChange={setOpenSurvey}>
           <PopoverTrigger asChild>
@@ -90,7 +90,7 @@ export default function SurveyQuestionSelector() {
             //   aria-expanded={openSurvey}
               className="justify-between"
             >
-	            {selectedSurveyObject ? selectedSurveyObject.title : "Select a survey..."}
+	            {selectedSurveyObject ? selectedSurveyObject.title : "Select a survey to filter questions…"}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 			</Button>
           </PopoverTrigger>
@@ -126,7 +126,7 @@ export default function SurveyQuestionSelector() {
 
       <div className="flex flex-col space-y-2">
         <label htmlFor="question-select" className="text-sm font-medium">
-          Question
+			Select a Question
         </label>
         <Popover open={openQuestion} onOpenChange={setOpenQuestion}>
           <PopoverTrigger asChild>
@@ -137,7 +137,7 @@ export default function SurveyQuestionSelector() {
               aria-expanded={openQuestion}
               className="justify-between"
             >
-              {selectedQuestionObject ? selectedQuestionObject.text : "Select a question..."}
+              {selectedQuestionObject ? selectedQuestionObject.text : "Choose a question to visualize…"}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
